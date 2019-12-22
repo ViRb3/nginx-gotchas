@@ -63,17 +63,10 @@ limit_req zone=serverlimit burst=10 nodelay;
 limit_req zone=userlimit burst=5 nodelay;
 ```
 
-## TLS
-```nginx
-# https://bettercrypto.org/
-ssl_certificate /etc/letsencrypt/live/example.com/fullchain.pem;
-ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;
-ssl_session_timeout 5m;
-ssl_prefer_server_ciphers on;
-ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # not possible to do exclusive
-ssl_ciphers 'EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA256:EECDH:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!IDEA:!ECDSA:kEDH:CAMELLIA128-SHA:AES128-SHA';
-add_header Strict-Transport-Security max-age=15768000;
-```
+## SSL best practices
+### [Mozilla SSL Configuration Generator](https://ssl-config.mozilla.org/)
+### [Bettercrypto](https://bettercrypto.org/#_nginx)
+### [Cipherli.st](https://cipherli.st/)
 
 ## Disable search engine crawling
 ```nginx
