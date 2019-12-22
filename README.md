@@ -38,21 +38,75 @@ location @login {
 }
 ```
 
-## `proxy_pass`
+## Reverse proxy
 ```nginx
-# don't pass request headers
-# e.g. If-Modified will result in 412
-proxy_pass_request_headers off;
-# only pass the required
-proxy_set_header Authorization $http_Authorization;
-proxy_set_header Cookie $http_cookie;
-
 # pass proper hostname
 proxy_set_header Host $http_host;
+proxy_set_header X-Forwarded-Host $http_host;
 # pass proper client IP
 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header X-Real-IP $remote_addr;
 # pass proper protocol
 proxy_set_header X-Forwarded-Proto $scheme;
 
+# don't automatically fix "location" and "redirect" headers
+proxy_redirect off;
+proxy_buffering off;
+
 proxy_pass ...; 
+```
+
+## Rate limit
+```nginx
+limit_req_status 403;
+limit_req zone=serverlimit burst=10 nodelay;
+limit_req zone=userlimit burst=5 nodelay;
+```
+
+## TLS
+```nginx
+# https://bettercrypto.org/
+ssl_certificate /etc/letsencrypt/live/example.com/fullchain.pem;
+ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;
+ssl_session_timeout 5m;
+ssl_prefer_server_ciphers on;
+ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # not possible to do exclusive
+ssl_ciphers 'EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA256:EECDH:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!IDEA:!ECDSA:kEDH:CAMELLIA128-SHA:AES128-SHA';
+add_header Strict-Transport-Security max-age=15768000;
+```
+
+## Disable search engine crawling
+```nginx
+location = /robots.txt {
+    add_header Content-Type text/plain;
+    return 200 "User-agent: *\nDisallow: /\n";
+}
+```
+
+## Auth proxy
+```nginx
+auth_request /auth;
+
+# pass auth cookie to client
+auth_request_set $saved_set_cookie $upstream_http_set_cookie;
+add_header Set-Cookie $saved_set_cookie;
+
+# use = to take precedence over other ~ locations
+location = /auth {
+    internal;
+    proxy_pass_request_body off;
+    proxy_set_header Content-Length "";
+    proxy_set_header X-Original-URI $request_uri;
+    # the "reverse proxy" section discussed before
+    include reverse-proxy.conf
+
+    # don't pass request headers
+    # e.g. If-Modified will result in 412
+    proxy_pass_request_headers off;
+    # only pass the required
+    proxy_set_header Authorization $http_Authorization;
+    proxy_set_header Cookie $http_cookie;
+
+    proxy_pass https://auth.example.com; 
+}
 ```
