@@ -2,15 +2,10 @@
 
 ## [Official pitfalls and common mistakes](https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/)
 
-## MIME type detection
-- ### `alias`, `proxy_pass` and jumps won't recognize the destination MIME type
-    You need an explicit `default_type`:
-    ```nginx
-    location /cv {
-        default_type text/html;
-        alias /etc/nginx/cv.html;
-    }
-    ```
+## SSL best practices
+- ### [Mozilla SSL Configuration Generator](https://ssl-config.mozilla.org/)
+- ### [Bettercrypto](https://bettercrypto.org/#_nginx)
+- ### [Cipherli.st](https://cipherli.st/)
 
 ## Directive matching order
 - ### `server_name`
@@ -20,10 +15,15 @@
   - `=`, `~`, `~*`, `^~`, and then prefixes
 - ### [DigitalOcean article](https://www.digitalocean.com/community/tutorials/understanding-nginx-server-and-location-block-selection-algorithms)
 
-## SSL best practices
-- ### [Mozilla SSL Configuration Generator](https://ssl-config.mozilla.org/)
-- ### [Bettercrypto](https://bettercrypto.org/#_nginx)
-- ### [Cipherli.st](https://cipherli.st/)
+## MIME type detection
+- ### `alias`, `proxy_pass` and jumps won't recognize the destination MIME type
+    You need an explicit `default_type`:
+    ```nginx
+    location /cv {
+        default_type text/html;
+        alias /etc/nginx/cv.html;
+    }
+    ```
 
 ## Snippets
 ### Jumping location blocks
