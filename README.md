@@ -2,27 +2,28 @@
 
 ## [Official pitfalls and common mistakes](https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/)
 
-## `alias` doesn't use MIME type detection
-- Need an explicit `default_type`:
-```nginx
-location /cv {
-    default_type text/html;
-    alias /etc/nginx/cv.html;
-}
-```
+## MIME type detection
+- ### `alias`, `proxy_pass` and jumps won't recognize the destination MIME type
+    You need an explicit `default_type`:
+    ```nginx
+    location /cv {
+        default_type text/html;
+        alias /etc/nginx/cv.html;
+    }
+    ```
 
 ## Directive matching order
-### `server_name`
-- > ... If none of the above steps are able to satisfy the request, then the request will be passed to the `default_server` for the matching IP address and port.
-- If no `default_server` is specified, the **first** server block will be chosen
-### `location`
-- `=`, `~`, `~*`, `^~`, and then prefixes
-### [DigitalOcean article](https://www.digitalocean.com/community/tutorials/understanding-nginx-server-and-location-block-selection-algorithms)
+- ### `server_name`
+  - > ... If none of the above steps are able to satisfy the request, then the request will be passed to the `default_server` for the matching IP address and port.
+  - If no `default_server` is specified, the **first** server block will be chosen
+- ### `location`
+  - `=`, `~`, `~*`, `^~`, and then prefixes
+- ### [DigitalOcean article](https://www.digitalocean.com/community/tutorials/understanding-nginx-server-and-location-block-selection-algorithms)
 
 ## SSL best practices
-### [Mozilla SSL Configuration Generator](https://ssl-config.mozilla.org/)
-### [Bettercrypto](https://bettercrypto.org/#_nginx)
-### [Cipherli.st](https://cipherli.st/)
+- ### [Mozilla SSL Configuration Generator](https://ssl-config.mozilla.org/)
+- ### [Bettercrypto](https://bettercrypto.org/#_nginx)
+- ### [Cipherli.st](https://cipherli.st/)
 
 ## Jumping location blocks
 ```nginx
