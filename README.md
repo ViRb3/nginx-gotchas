@@ -19,6 +19,11 @@ location /cv {
 - `=`, `~`, `~*`, `^~`, and then prefixes
 ### [DigitalOcean article](https://www.digitalocean.com/community/tutorials/understanding-nginx-server-and-location-block-selection-algorithms)
 
+## SSL best practices
+### [Mozilla SSL Configuration Generator](https://ssl-config.mozilla.org/)
+### [Bettercrypto](https://bettercrypto.org/#_nginx)
+### [Cipherli.st](https://cipherli.st/)
+
 ## Jumping location blocks
 ```nginx
 location /example1 {
@@ -62,11 +67,6 @@ limit_req_status 403;
 limit_req zone=serverlimit burst=10 nodelay;
 limit_req zone=userlimit burst=5 nodelay;
 ```
-
-## SSL best practices
-### [Mozilla SSL Configuration Generator](https://ssl-config.mozilla.org/)
-### [Bettercrypto](https://bettercrypto.org/#_nginx)
-### [Cipherli.st](https://cipherli.st/)
 
 ## Disable search engine crawling
 ```nginx
