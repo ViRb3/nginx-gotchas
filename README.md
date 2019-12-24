@@ -25,7 +25,8 @@
 - ### [Bettercrypto](https://bettercrypto.org/#_nginx)
 - ### [Cipherli.st](https://cipherli.st/)
 
-## Jumping location blocks
+## Snippets
+### Jumping location blocks
 ```nginx
 location /example1 {
     ...
@@ -44,7 +45,7 @@ location @login {
 }
 ```
 
-## Reverse proxy
+### Reverse proxy
 ```nginx
 # pass proper hostname
 proxy_set_header Host $http_host;
@@ -62,14 +63,14 @@ proxy_buffering off;
 proxy_pass ...; 
 ```
 
-## Rate limit
+### Rate limit
 ```nginx
 limit_req_status 403;
 limit_req zone=serverlimit burst=10 nodelay;
 limit_req zone=userlimit burst=5 nodelay;
 ```
 
-## Disable search engine crawling
+### Disable search engine crawling
 ```nginx
 location = /robots.txt {
     add_header Content-Type text/plain;
@@ -77,7 +78,7 @@ location = /robots.txt {
 }
 ```
 
-## Auth proxy
+### Auth proxy
 ```nginx
 auth_request /auth;
 
@@ -105,7 +106,7 @@ location = /auth {
 }
 ```
 
-## Don't respond if invalid URL
+### Don't respond if invalid URL
 ```nginx
 error_page 404 403 @putoff;
 
