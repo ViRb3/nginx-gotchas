@@ -8,16 +8,13 @@
 - ### [Cipherli.st](https://cipherli.st/)
 
 ## Directive matching order
-- ### `server_name`
-  - > ... If none of the above steps are able to satisfy the request, then the request will be passed to the `default_server` for the matching IP address and port.
-  - If no `default_server` is specified, the **first** server block will be chosen
-- ### `location`
-  - `=`, `~`, `~*`, `^~`, and then prefixes
 - ### [DigitalOcean article](https://www.digitalocean.com/community/tutorials/understanding-nginx-server-and-location-block-selection-algorithms)
+  - #### `server_name`
+    - > ... If none of the above steps are able to satisfy the request, then the request will be passed to the `default_server` for the matching IP address and port.
+    - If no `default_server` is specified, the **first** server block will be chosen
 
 ## MIME type detection
-- ### `alias`, `proxy_pass` and jumps won't recognize the destination MIME type
-    You need an explicit `default_type`:
+- ### `alias`, `proxy_pass` and jumps won't recognize the destination MIME type. You need an explicit `default_type`:
     ```nginx
     location /cv {
         default_type text/html;
@@ -78,7 +75,7 @@ location = /robots.txt {
 }
 ```
 
-### Auth proxy
+### Cookie-based auth proxy
 ```nginx
 auth_request /auth;
 
