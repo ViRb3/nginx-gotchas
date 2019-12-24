@@ -103,3 +103,17 @@ location = /auth {
     proxy_pass https://auth.example.com; 
 }
 ```
+
+## Don't respond if invalid URL
+```nginx
+error_page 404 403 @putoff;
+
+location @putoff {
+    return 444;
+}
+
+location / {
+    error_page 418 @putoff;
+    return 418;
+}
+```
