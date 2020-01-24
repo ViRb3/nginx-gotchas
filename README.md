@@ -90,7 +90,7 @@ location = /auth {
     proxy_set_header Content-Length "";
     proxy_set_header X-Original-URI $request_uri;
     # the "reverse proxy" section discussed before
-    include reverse-proxy.conf
+    include reverse-proxy.conf;
 
     # don't pass request headers
     # e.g. If-Modified will result in 412
