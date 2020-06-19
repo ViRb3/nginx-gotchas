@@ -116,3 +116,12 @@ location / {
     return 418;
 }
 ```
+### `proxy_pass` trailing slash ([Source](https://stackoverflow.com/questions/22759345/nginx-trailing-slash-in-proxy-pass-url))
+- No URI (i.e. `http://server:1234`) will forward the URI from the original request exactly as it was with all double slashes, `../` and so on
+-  With URI (i.e. `http://server:1234/a/`) acts like the `alias` directive, meaning nginx will replace the part that matches the location prefix with the URI in the `proxy_pass` directive. For example:
+    ```nginx
+    location /one/ {
+        proxy_pass http://127.0.0.1:8080/two;
+    }
+    ```
+    Accessing `http://yourserver.com/one/path/here?param=1` will become `http://127.0.0.1/twopath/here?param=1`
