@@ -23,7 +23,8 @@
     ```
 
 ## Snippets
-### Jumping location blocks
+### Jump location block
+> The order of execution for each approach is different, test which works for your use case.
 ```nginx
 location /example1 {
     ...
