@@ -42,6 +42,16 @@ location @login {
 }
 ```
 
+### Access `http` block from `.config` file
+```nginx
+# will go in parent (http) block
+limit_req_zone $binary_remote_addr zone=userlimit:10m rate=1r/s;
+
+server {
+    ...
+}
+```
+
 ### Reverse proxy
 ```nginx
 # pass proper hostname
