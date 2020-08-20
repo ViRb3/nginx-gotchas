@@ -27,7 +27,7 @@
 ```nginx
 location /example1 {
     ...
-    try_files DUMMY @login;
+    try_files /dev/null @login;
 }
 
 location /example2 {
